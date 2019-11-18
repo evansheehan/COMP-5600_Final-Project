@@ -1,0 +1,37 @@
+//prompt user for 3 movies they like and dislike
+//run code to parse all reviews of these 6 movies.
+//construct 2 vocabularies, like and dislike
+//format them as you construct them as an array of objects with the strings, followed by the number of occurences of the string.
+//order them as you construct in alphabetical order, using an O(log2x) time complexity
+//keep an updating tally of the total number of words within the array
+like_vocab = vocab of liked movies;
+dislike_vocab = vocab of disliked movies;
+//now we do our naive bayes
+
+	double p_like = 0;
+	double p_dislike = 0;
+//cj or the probability of each class
+	p_like = (sum of wordcount in all liked movies)/(sum of total word count in all movies);
+	p_dislike = (sum of wordcount in all disliked movies)/(sum of total word count in all movies);
+//now we start looking for new movies to compare to 
+//find these movies and make a similar vocab that we constructed for like and dislike, titled the movie's name
+//this vocab can just be a bag of words, and does not need to have the numbers of each word listed because of our for loop later
+	movie_vocab = vocab array of specific movie; 
+//compare this movie to like and dislike using naive bayes:
+	double p_good = 0;
+	double p_bad = 0;
+//
+	p_good = log(p_like);
+	for each word in movie_vocab{
+		find movie_vocab[i];
+		numerator = (number of times movie_vocab[i] appears in like_vocab) + 1;
+// ****not sure if we should use the size of the array or the number of total words in the array here. ask professor.
+		denominator = like_vocab.size + total number of words;
+		add_this = numerator/denominator;
+		p_good = p_good + log(add_this);
+	}
+//repeat this exact process for p_dislike and save the resulting p_good and p_bad as a variable that can be linked to the movie title
+//do this around 100 times
+//output the movies with the highest p_good and p_bad
+//not sure if this data will be skewed by the number of words in the comparison movie reviews. something to keep in mind.
+//entire formular can be altered to suit "genres"
