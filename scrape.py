@@ -4,6 +4,7 @@ import json
 
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys 
+from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
@@ -18,7 +19,7 @@ def getReviews(movieTitle):
     #Instantiate driver
     driver = webdriver.Chrome()
     driver.get("http://www.imdb.com")
-    driver.implicitly_wait(1)
+    wait = WebDriverWait(driver, 10)
 
     #Search movie
     elem = driver.find_element_by_name("q")
@@ -33,18 +34,18 @@ def getReviews(movieTitle):
 
     #Go to user reviews page
     elem = driver.find_element_by_class_name("user-comments")
-    elem = elem.find_element_by_partial_link_text("user reviews")
+    elem = wait.until(EC.presence_of_element_located((By.PARTIAL_LINK_TEXT, "user reviews")))
+    #elem = elem.find_element_by_partial_link_text("user reviews")
     elem.click()
 
     #Continuously click the load more button until all reviews are loaded.
     #This works because of the implicit wait declared previously
-    for i in range(10):
+    for i in range(4):
         try:
             elem = driver.find_element_by_id("load-more-trigger")
             elem.click()
         except:
             break
-
     reviewsList = driver.find_elements_by_class_name("imdb-user-review")
     reviews = ''
 
@@ -52,7 +53,7 @@ def getReviews(movieTitle):
     for review in reviewsList:
         reviewText = review.find_element_by_class_name("text").text
         if (reviewText == ''):
-            #This add the current review text to one big string, reviews, making the string lowercase and getting rid of punctuation
+            #This adds the current review text to one big string, reviews, making the string lowercase and getting rid of punctuation
             #reviews += reviewText.lower().translate(str.maketrans('','',string.punctuation))
 
             review.find_element_by_class_name("spoiler-warning__control").click()
@@ -67,22 +68,17 @@ def getReviews(movieTitle):
 
     return reviews
 
-like_words = ''
-for movie in LIKE_LIST:
-    like_words += getReviews(movie)
+def generateDict(reviewList):
+    dictionary = wc.countWords(wc, reviewList)
+    dictionary = wc.sortFreqDict(wc, dictionary)
+    return dictionary
 
-dictionary = wc.countWords(wc, like_words)
-dictionary = wc.sortFreqDict(wc, dictionary)
-with open("Like.json", 'w') as f:
-    json.dump(dictionary, f)
+like_dict = generateDict(LIKE_LIST)
+with open("Dislike_List.json", 'w') as f:
+        json.dump(like_dict, f)
 
-dislike_words = ''
-for movie in DISLIKE_LIST:
-    dislike_words += getReviews(movie)
-
-dictionary = wc.countWords(wc, dislike_words)
-dictionary = wc.sortFreqDict(wc, dictionary)
-with open("Dislike.json", 'w') as f:
-    json.dump(dictionary, f)
+dislike_dict = generateDict(DISLIKE_LIST)
+with open("Like_List.json", 'w') as f:
+        json.dump(like_dict, f)
 
 print('Stop')

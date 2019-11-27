@@ -65,7 +65,10 @@ class WordCount:
 
     def countWords(self, reviews):
         #global stopwords
-        splitReview = reviews.split()
+        reviewString = ''
+        for review in reviews:
+            reviewString += review
+        splitReview = reviewString.split()
         splitReview = WordCount.removeStopWords(self, splitReview, stopwords)
         wordFreq = [splitReview.count(w) for w in splitReview]
         return dict(list(zip(splitReview, wordFreq)))
