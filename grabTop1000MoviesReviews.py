@@ -37,7 +37,7 @@ with open("Top1000.json", "r") as f:
         movies.append(movie)
         json.dump(movies, f)"""
 
-with open("MoviesAndReviews.json", "w") as f:
+with open("MoviesAndReviews.json", "a") as f:
     #json.dump([], f)
     for movieTitle in movieTitles:
         movieTitle = movieTitle.split("(")
