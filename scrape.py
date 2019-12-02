@@ -28,15 +28,34 @@ def getReviews(movieTitle):
     elem.send_keys(Keys.RETURN)
 
     #Click on first result
+    while not EC.presence_of_element_located((By.CLASS_NAME, "findResult.odd")):
+        driver.refresh()
+    #elem = wait.until(EC.presence_of_element_located((By.CLASS_NAME, "findResult.odd")))
     elem = driver.find_element_by_class_name("findResult.odd")
+
+    #elem = driver.find_element_by_class_name("findResult.odd")
+    #elem = wait.until(EC.presence_of_element_located((By.TAG_NAME, "a")))
     elem = elem.find_element_by_tag_name("a")
-    elem.click()
+    try:
+        elem.click()
+    except:
+        return None
 
     #Go to user reviews page
-    elem = driver.find_element_by_class_name("user-comments")
-    elem = wait.until(EC.presence_of_element_located((By.PARTIAL_LINK_TEXT, "user reviews")))
-    #elem = elem.find_element_by_partial_link_text("user reviews")
-    elem.click()
+    """elem = wait.until(EC.presence_of_element_located((By.CLASS_NAME, "user-comments"))):
+    try:
+        elem = wait.until(EC.presence_of_element_located((By.PARTIAL_LINK_TEXT, "user reviews")))
+        elem.click()
+    except:
+        return"""
+    while not EC.presence_of_element_located((By.CLASS_NAME, "user-comments")):
+        driver.refresh()
+    try:
+        elem = driver.find_element_by_partial_link_text("user reviews")
+        elem.click()
+    except:
+        driver.close()
+        return None
 
     #Continuously click the load more button until all reviews are loaded.
     #This works because of the implicit wait declared previously

@@ -16,9 +16,14 @@ with open("Top1000.json", "r") as f:
     movieTitles = json.load(f)
 
 for movieTitle in movieTitles:
-    reviews = Scrape.getReviews(movieTitle)
-    reviewDict = Scrape.generateDict(reviews)
-    movie = Movie(movieTitle, reviewDict)
+    movieTitle = movieTitle.split("(")
+    reviews = Scrape.getReviews(movieTitle[0])
+    
+    if reviews != None:
+        reviewDict = Scrape.generateDict(reviews)
+        movie = Movie(movieTitle, reviewDict)
+    else:
+        movie = Movie(movieTitle, None)
     movies.append(movie)
 
 with open("MoviesAndReviews", "w") as f:
