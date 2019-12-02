@@ -56,8 +56,8 @@ with open("MoviesAndReviews.json", "w") as f:
         }
 
         movie = json.dumps(movie)
-        movies.append(movie)
-        json.dump(movies, f)
+        #movies.append(movie)
+        json.dump(movie, f)
 
 """with open("MoviesAndReviews", "w") as f:
     json.dump(movies, f)"""
