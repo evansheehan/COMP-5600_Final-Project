@@ -55,7 +55,7 @@ with open("MoviesAndReviews.json", "a") as f:
             "Reviews": reviewDict
         }
 
-        movie = json.dumps(movie)
+        #movie = json.dumps(movie)
         #movies.append(movie)
         json.dump(movie, f)
 
