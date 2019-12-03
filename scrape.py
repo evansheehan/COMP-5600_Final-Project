@@ -61,7 +61,7 @@ def getReviews(movieTitle):
     #This works because of the implicit wait declared previously
     for i in range(4):
         try:
-            elem = driver.find_element_by_id("load-more-trigger")
+            elem = wait.until(EC.presence_of_element_located((By.ID, "load-more-trigger")))
             elem.click()
         except:
             break

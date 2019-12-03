@@ -1,4 +1,5 @@
 import json
+import sys
 import Scrape
 #from MovieObj import Movie
 
@@ -9,7 +10,7 @@ from selenium.webdriver.support import expected_conditions as EC
 
 from bs4 import BeautifulSoup
 
-ITERATION_SIZE = 25
+ITERATION_SIZE = 50
 
 movieTitles = []
 movies = []
@@ -20,32 +21,53 @@ with open("Top1000.json", "r") as f:
 #with open("MoviesAndReviews.json", "a") as f:
 #json.dump([], f)
 #divideTitles = int(len(movieTitles)/20)
-iteration = 2
+iteration = 16
 
-for i in range(iteration*ITERATION_SIZE, ITERATION_SIZE+(iteration*ITERATION_SIZE)):
-    movieTitle = movieTitles[i]
-    movieTitle = movieTitle.split("(")
-    reviews = Scrape.getReviews(movieTitle[0])
-    
-    if reviews != None:
-        reviewDict = Scrape.generateDict(reviews)
-        #movie = Movie(movieTitle, reviewDict)
-    else:
-        reviewDict = None
-        #movie = Movie(movieTitle, None)
+try:
+    if open("Iteration" + str(iteration) + ".json"):
+        response = input("File already exists, would you like to replace it? y or n:")
+        if response == "n":
+                sys.exit("File already exists, don't replace.")
+        while response not in ["y", "n"]:
+            response = input("Please input a y or n:")
+            if response == "n":
+                sys.exit("File already exists, don't replace.")
+            elif response == "y":
+                break
+except FileNotFoundError:
+    print("File not found...a new one will be created")
 
-    movie = {
-        "Title": movieTitle,
-        "Reviews": reviewDict
-    }
+try:
+    current_index = 1+movieTitles.index("Pet Sematary (2019)")
+except:
+    sys.exit("Cannot find index of given movie")
 
-    movies.append(movie)
+print(current_index)
+
+#for i in range(iteration*ITERATION_SIZE, ITERATION_SIZE+(iteration*ITERATION_SIZE)):
+for i in range(current_index, 1000):
+    try:
+        movieTitle = movieTitles[i]
+        movieTitle = movieTitle.split("(")
+        reviews = Scrape.getReviews(movieTitle[0])
+        
+        if reviews != None:
+            reviewDict = Scrape.generateDict(reviews)
+            #movie = Movie(movieTitle, reviewDict)
+        else:
+            reviewDict = None
+            #movie = Movie(movieTitle, None)
+
+        movie = {
+            "Title": movieTitle,
+            "Reviews": reviewDict
+        }
+
+        movies.append(movie)
+    except:
+        break
 
 with open("Iteration" + str(iteration) + ".json", "w") as f:
     json.dump(movies, f)
-
-
-"""with open("MoviesAndReviews", "w") as f:
-    json.dump(movies, f)"""
     
 

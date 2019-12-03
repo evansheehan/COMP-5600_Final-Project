@@ -1,4 +1,5 @@
 import json
+import Scrape
 
 # import the list of movies
 from typing import List, Any
