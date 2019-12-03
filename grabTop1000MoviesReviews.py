@@ -9,55 +9,41 @@ from selenium.webdriver.support import expected_conditions as EC
 
 from bs4 import BeautifulSoup
 
+ITERATION_SIZE = 25
+
 movieTitles = []
 movies = []
 
 with open("Top1000.json", "r") as f:
     movieTitles = json.load(f)
 
-"""with open("MoviesAndReviews", "w") as f:
-    #json.dump([], f)
-    for movieTitle in movieTitles:
-        movieTitle = movieTitle.split("(")
-        reviews = Scrape.getReviews(movieTitle[0])
-        
-        if reviews != None:
-            reviewDict = Scrape.generateDict(reviews)
-            #movie = Movie(movieTitle, reviewDict)
-        else:
-            break
-            #movie = Movie(movieTitle, None)
+#with open("MoviesAndReviews.json", "a") as f:
+#json.dump([], f)
+#divideTitles = int(len(movieTitles)/20)
+iteration = 2
 
-        movie = {
-            "Title": movieTitle,
-            "Reviews": reviewDict
-        }
+for i in range(iteration*ITERATION_SIZE, ITERATION_SIZE+(iteration*ITERATION_SIZE)):
+    movieTitle = movieTitles[i]
+    movieTitle = movieTitle.split("(")
+    reviews = Scrape.getReviews(movieTitle[0])
+    
+    if reviews != None:
+        reviewDict = Scrape.generateDict(reviews)
+        #movie = Movie(movieTitle, reviewDict)
+    else:
+        reviewDict = None
+        #movie = Movie(movieTitle, None)
 
-        movie = json.dumps(movie)
-        movies.append(movie)
-        json.dump(movies, f)"""
+    movie = {
+        "Title": movieTitle,
+        "Reviews": reviewDict
+    }
 
-with open("MoviesAndReviews.json", "a") as f:
-    #json.dump([], f)
-    for movieTitle in movieTitles:
-        movieTitle = movieTitle.split("(")
-        reviews = Scrape.getReviews(movieTitle[0])
-        
-        if reviews != None:
-            reviewDict = Scrape.generateDict(reviews)
-            #movie = Movie(movieTitle, reviewDict)
-        else:
-            reviewDict = None
-            #movie = Movie(movieTitle, None)
+    movies.append(movie)
 
-        movie = {
-            "Title": movieTitle,
-            "Reviews": reviewDict
-        }
+with open("Iteration" + str(iteration) + ".json", "w") as f:
+    json.dump(movies, f)
 
-        #movie = json.dumps(movie)
-        #movies.append(movie)
-        json.dump(movie, f)
 
 """with open("MoviesAndReviews", "w") as f:
     json.dump(movies, f)"""
