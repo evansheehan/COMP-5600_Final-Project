@@ -92,8 +92,8 @@ for word in disliked_dict:
 vocabulary_sum = like_sum + dislike_sum
 
 # calculate word count difference between liked and disliked and present the two as a ratio
-p_like = like_sum/(vocabulary_sum)
-p_dislike = dislike_sum/(vocabulary_sum)
+p_like = math.log1p(like_sum/(vocabulary_sum))
+p_dislike = math.log1p(dislike_sum/(vocabulary_sum))
 
 """prob_word_given_like = {}
 prob_word_given_dislike = {}"""
@@ -118,11 +118,11 @@ for movie in movies:
         for word in movie["Reviews"]:
 
             try:
-                prob_word_given_like = math.log1p(((liked_dict.get(word) + 1)/(like_sum + len(liked_dict)))*movie["Reviews"].get(word))
+                prob_word_given_like = math.log1p(((liked_dict.get(word) + 1)/(like_sum + len(liked_dict))))*movie["Reviews"].get(word)
             except:
                 prob_word_given_like = math.log1p(1 / (like_sum + len(liked_dict)))
             try:
-                prob_word_given_dislike = math.log1p(((disliked_dict.get(word) + 1)/(dislike_sum + len(disliked_dict)))*movie["Reviews"].get(word))
+                prob_word_given_dislike = math.log1p(((disliked_dict.get(word) + 1)/(dislike_sum + len(disliked_dict))))*movie["Reviews"].get(word)
             except:
                 prob_word_given_dislike = math.log1p(1 / (dislike_sum + len(disliked_dict)))
 
