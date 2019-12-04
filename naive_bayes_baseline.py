@@ -115,11 +115,11 @@ for movie in movies:
         for word in movie["Reviews"]:
 
             try:
-                prob_word_given_like = (liked_dict.get(word) + 1)/(like_sum + len(liked_dict))
+                prob_word_given_like = ((liked_dict.get(word) + 1)/(like_sum + len(liked_dict)))**movie["Reviews"].get(word)
             except:
                 prob_word_given_like = 1 / (like_sum + len(liked_dict))
             try:
-                prob_word_given_dislike = (disliked_dict.get(word) + 1)/(dislike_sum + len(disliked_dict))
+                prob_word_given_dislike = ((disliked_dict.get(word) + 1)/(dislike_sum + len(disliked_dict)))**movie["Reviews"].get(word)
             except:
                 prob_word_given_dislike = 1 / (dislike_sum + len(disliked_dict))
 
