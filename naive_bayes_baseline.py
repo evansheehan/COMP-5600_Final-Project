@@ -108,6 +108,8 @@ for word in disliked_dict:
 best_movie = ["", -1]
 worst_movie = ["", -1]
 
+results = []
+
 for movie in movies:
     if movie["Reviews"] != None and movie["Title"] not in input_list:
         like_probabilities = []
@@ -129,6 +131,14 @@ for movie in movies:
         
         probability_like_movie = p_like*(np.product(like_probabilities))
         probability_dislike_movie = p_dislike*(np.product(dislike_probabilities))
+
+        #Add to results array
+        movie_to_add = []
+        movie_to_add.append(movie["Title"])
+        movie_to_add.append(probability_like_movie)
+        movie_to_add.append(probability_dislike_movie)
+        movie_to_add.append(abs(probability_like_movie-probability_dislike_movie))
+        results.append(movie_to_add)
 
         if probability_like_movie > best_movie[1]:
             best_movie[0] = movie["Title"]
