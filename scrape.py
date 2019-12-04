@@ -42,12 +42,6 @@ def getReviews(movieTitle):
         return None
 
     #Go to user reviews page
-    """elem = wait.until(EC.presence_of_element_located((By.CLASS_NAME, "user-comments"))):
-    try:
-        elem = wait.until(EC.presence_of_element_located((By.PARTIAL_LINK_TEXT, "user reviews")))
-        elem.click()
-    except:
-        return"""
     while not EC.presence_of_element_located((By.CLASS_NAME, "user-comments")):
         driver.refresh()
     try:
@@ -58,7 +52,6 @@ def getReviews(movieTitle):
         return None
 
     #Continuously click the load more button until all reviews are loaded.
-    #This works because of the implicit wait declared previously
     for i in range(4):
         try:
             elem = wait.until(EC.presence_of_element_located((By.ID, "load-more-trigger")))
@@ -72,13 +65,9 @@ def getReviews(movieTitle):
     for review in reviewsList:
         reviewText = review.find_element_by_class_name("text").text
         if (reviewText == ''):
-            #This adds the current review text to one big string, reviews, making the string lowercase and getting rid of punctuation
-            #reviews += reviewText.lower().translate(str.maketrans('','',string.punctuation))
-
             review.find_element_by_class_name("spoiler-warning__control").click()
             reviewText = review.find_element_by_class_name("text").text
             reviews += reviewText.lower().translate(str.maketrans('','',string.punctuation))
-
         print(reviewText)
 
     print(len(reviews))
@@ -91,6 +80,18 @@ def generateDict(reviewList):
     dictionary = wc.countWords(wc, reviewList)
     dictionary = wc.sortFreqDict(wc, dictionary)
     return dictionary
+
+def generateMovie(movie_title):
+    reviews = getReviews(movie_title)
+    if reviews != None:
+        review_dictionary = generateDict(reviews)
+    else:
+        review_dictionary = None
+    movie = {
+        "Title": movie_title,
+        "Reviews": review_dictionary
+    }
+    return movie
 
 like_dict = generateDict(LIKE_LIST)
 with open("Dislike_List.json", 'w') as f:

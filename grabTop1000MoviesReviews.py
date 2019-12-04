@@ -44,26 +44,25 @@ except:
 
 print(current_index)
 
-#for i in range(iteration*ITERATION_SIZE, ITERATION_SIZE+(iteration*ITERATION_SIZE)):
 for i in range(current_index, 1000):
     try:
         movieTitle = movieTitles[i]
         movieTitle = movieTitle.split("(")
-        reviews = Scrape.getReviews(movieTitle[0])
+        #reviews = Scrape.getReviews(movieTitle[0])
         
-        if reviews != None:
+        """if reviews != None:
             reviewDict = Scrape.generateDict(reviews)
-            #movie = Movie(movieTitle, reviewDict)
         else:
             reviewDict = None
-            #movie = Movie(movieTitle, None)
 
         movie = {
             "Title": movieTitle,
             "Reviews": reviewDict
-        }
+        }"""
 
+        movie = Scrape.generateMovie(movieTitle[0])
         movies.append(movie)
+        
     except:
         break
 
