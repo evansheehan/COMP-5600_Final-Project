@@ -1,6 +1,5 @@
 import json
 import numpy as np
-import Scrape
 
 # import the list of movies
 from typing import List, Any
@@ -114,8 +113,18 @@ for movie in movies:
         like_probabilities = []
         dislike_probabilities = []
         for word in movie["Reviews"]:
-            prob_word_given_like = liked_dict.get(word)/vocabulary_sum
-            prob_word_given_dislike = disliked_dict.get(word)/vocabulary_sum
+
+            try:
+                prob_word_given_like = liked_dict.get(word)/like_sum
+            except:
+                prob_word_given_like = 0
+            try:
+                prob_word_given_dislike = disliked_dict.get(word)/dislike_sum
+            except:
+                prob_word_given_dislike = 0
+
+            like_probabilities.append(prob_word_given_like)
+            dislike_probabilities.append(prob_word_given_dislike)
 
         
         probability_like_movie = p_like*(np.product(like_probabilities))

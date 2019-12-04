@@ -12,11 +12,11 @@ from bs4 import BeautifulSoup
 
 ITERATION_SIZE = 50
 
-movieTitles = []
+movie_titles = []
 movies = []
 
 with open("Top1000.json", "r") as f:
-    movieTitles = json.load(f)
+    movie_titles = json.load(f)
 
 #with open("MoviesAndReviews.json", "a") as f:
 #json.dump([], f)
@@ -38,7 +38,7 @@ except FileNotFoundError:
     print("File not found...a new one will be created")
 
 try:
-    current_index = 1+movieTitles.index("Pet Sematary (2019)")
+    current_index = 1+movie_titles.index("Pet Sematary (2019)")
 except:
     sys.exit("Cannot find index of given movie")
 
@@ -46,8 +46,8 @@ print(current_index)
 
 for i in range(current_index, 1000):
     try:
-        movieTitle = movieTitles[i]
-        movieTitle = movieTitle.split("(")
+        movie_title = movie_titles[i]
+        movie_title = movie_title.split("(")
         #reviews = Scrape.getReviews(movieTitle[0])
         
         """if reviews != None:
@@ -60,7 +60,7 @@ for i in range(current_index, 1000):
             "Reviews": reviewDict
         }"""
 
-        movie = Scrape.generateMovie(movieTitle[0])
+        movie = Scrape.generate_movie(movie_title[0])
         movies.append(movie)
         
     except:

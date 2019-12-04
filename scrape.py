@@ -14,7 +14,7 @@ DISLIKE_LIST = ["It Chapter 2", "The Shining", "Doctor Sleep"]
 like_dict = dict
 dislike_dict = dict
 
-def getReviews(movieTitle):
+def get_reviews(movie_title):
 
     #Instantiate driver
     driver = webdriver.Chrome()
@@ -24,7 +24,7 @@ def getReviews(movieTitle):
     #Search movie
     elem = driver.find_element_by_name("q")
     elem.clear()
-    elem.send_keys(movieTitle)
+    elem.send_keys(movie_title)
     elem.send_keys(Keys.RETURN)
 
     #Click on first result
@@ -76,15 +76,15 @@ def getReviews(movieTitle):
 
     return reviews
 
-def generateDict(reviewList):
+def generate_dict(reviewList):
     dictionary = wc.countWords(wc, reviewList)
     dictionary = wc.sortFreqDict(wc, dictionary)
     return dictionary
 
-def generateMovie(movie_title):
-    reviews = getReviews(movie_title)
+def generate_movie(movie_title):
+    reviews = get_reviews(movie_title)
     if reviews != None:
-        review_dictionary = generateDict(reviews)
+        review_dictionary = generate_dict(reviews)
     else:
         review_dictionary = None
     movie = {
@@ -93,11 +93,11 @@ def generateMovie(movie_title):
     }
     return movie
 
-like_dict = generateDict(LIKE_LIST)
+like_dict = generate_dict(LIKE_LIST)
 with open("Dislike_List.json", 'w') as f:
         json.dump(like_dict, f)
 
-dislike_dict = generateDict(DISLIKE_LIST)
+dislike_dict = generate_dict(DISLIKE_LIST)
 with open("Like_List.json", 'w') as f:
         json.dump(like_dict, f)
 

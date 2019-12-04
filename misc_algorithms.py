@@ -1,16 +1,16 @@
 import json
 
-def rearrangeMovieList(movie_list):
+def rearrange_movie_list(movie_list):
     new_movie_list = []
     for movie in movie_list:
         new_movie = {
             "Title": movie["Title"],
-            "Reviews": rearrangeReviewDict(movie["Reviews"])
+            "Reviews": rearrange_review_dict(movie["Reviews"])
         }
         new_movie_list.append(new_movie)
     return new_movie_list
 
-def rearrangeReviewDict(review_list):
+def rearrange_review_dict(review_list):
     if review_list == None:
         return None
     new_review_dict = {}
@@ -21,7 +21,7 @@ def rearrangeReviewDict(review_list):
         new_review_dict.update(review)
     return new_review_dict
 
-def eliminateEmptyReviews(movie_list):
+def eliminate_empty_reviews(movie_list):
     new_movie_list = []
     for movie in movie_list:
         try:
@@ -41,7 +41,7 @@ movie_list = []
 
 with open("AllReviews_Reformatted.json", "r") as f:
     movie_list = json.load(f)
-    movie_list = eliminateEmptyReviews(movie_list)
+    movie_list = eliminate_empty_reviews(movie_list)
     print("debug")
 
 with open("AllReviews_Reformatted_2.json", "w") as f:
