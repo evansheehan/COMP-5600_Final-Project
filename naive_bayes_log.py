@@ -155,6 +155,9 @@ for movie in movies:
 
 print(best_movie)
 print(worst_movie)
+def sort_value(val):
+    return val[3]
+results.sort(key = sort_value, reverse = True)
 
 
 """import json
