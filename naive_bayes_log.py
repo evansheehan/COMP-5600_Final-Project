@@ -143,11 +143,11 @@ for movie in movies:
         movie_to_add.append(delta_prob/sum_prob)
         results.append(movie_to_add)
 
-        if delta_prob/sum_prob > best_movie[1]:
+        if (delta_prob) > best_movie[1]:
             best_movie[0] = movie["Title"]
             best_movie[1] = delta_prob/sum_prob
 
-        if delta_prob/sum_prob < worst_movie[1]:
+        if (delta_prob) < worst_movie[1]:
             worst_movie[0] = movie["Title"]
             worst_movie[1] = delta_prob/sum_prob
 
