@@ -1,6 +1,6 @@
 import json
 import sys
-import Scrape
+import scrape
 #from MovieObj import Movie
 
 from selenium import webdriver
