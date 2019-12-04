@@ -146,7 +146,7 @@ for movie in movies:
             best_movie[0] = movie["Title"]
             best_movie[1] = delta_prob
 
-        if delta_prob > worst_movie[1]:
+        if delta_prob < worst_movie[1]:
             worst_movie[0] = movie["Title"]
             worst_movie[1] = delta_prob
 
