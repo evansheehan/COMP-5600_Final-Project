@@ -13,13 +13,13 @@ with open("AllReviews_Reformatted.json") as f:
         movies.append(movie)
 
 # get 3 movies the user liked and disliked
-l_1 = "Shoplifters" #input("Enter a movie you enjoyed: ")
-l_2 = "Whiplash" #input("Enter another movie you enjoyed: ")
-l_3 = "The Lighthouse" #input("Enter a third movie you enjoyed: ")
+l_1 = "Frozen" #input("Enter a movie you enjoyed: ")
+l_2 = "Click" #input("Enter another movie you enjoyed: ")
+l_3 = "Moana" #input("Enter a third movie you enjoyed: ")
 
-d_1 = "La La Land" #input("Enter a movie you hated: ")
+d_1 = "The Lighthouse" #input("Enter a movie you hated: ")
 d_2 = "Parasite" #input("Enter another movie you hated: ")
-d_3 = "Moana" #input("Enter a third movie you hated: ")
+d_3 = "Whiplash" #input("Enter a third movie you hated: ")
 
 input_list = [l_1, l_2, l_3, d_1, d_2, d_3]
 
@@ -48,8 +48,10 @@ disliked_3 = next(movie for movie in movies if movie["Title"][0] == d_3)"""
 # populate two new dictionaries of liked and disliked reviews
 liked_dict = {}
 disliked_dict = {}
+#distinct_words = {}
 
 for movie in liked_movies:
+    assert movie["Reviews"] != None, movie["Title"] + " has no reviews."
     reviews = list(movie["Reviews"].items())
     for review in reviews:
         word = review[0]
@@ -60,6 +62,7 @@ for movie in liked_movies:
             liked_dict.update({word: count})
 
 for movie in disliked_movies:
+    assert movie["Reviews"] != None, movie["Title"] + " has no reviews."
     reviews = list(movie["Reviews"].items())
     for review in reviews:
         word = review[0]
@@ -91,16 +94,57 @@ prob_word_given_like = {}
 prob_word_given_dislike = {}
 
 for word in liked_dict:
-    prob = liked_dict[word]/like_sum
+    prob = (liked_dict[word]/like_sum)+1
     prob_word_given_like.update({word: prob})
 
 for word in disliked_dict:
-    prob = disliked_dict[word]/like_sum
-    prob_word_given_dislike.update({word, prob})
+    prob = (disliked_dict[word]/like_sum)+1
+    prob_word_given_dislike.update({word: prob})
+
+results = []
+
+best_movie = ["", 0]
+worst_movie = ["", 0]
+for movie in movies:
+    if movie["Reviews"] != None and movie["Title"] not in input_list:
+        like_probabilities = []
+        dislike_probabilities = []
+        for word in movie["Reviews"]:
+            try:
+                prob_word_like = prob_word_given_like.get(word)
+                prob_word_dislike = prob_word_given_dislike.get(word)
+            except TypeError:
+                continue
+
+            if prob_word_like:
+                like_probabilities.append(prob_word_like)
+            if prob_word_dislike:
+                dislike_probabilities.append(prob_word_dislike)
+        
+        probability_like_movie = p_like*(np.product(like_probabilities))
+        probability_dislike_movie = p_dislike*(np.product(dislike_probabilities))
+
+        if probability_like_movie > best_movie[1]:
+            best_movie[0] = movie["Title"]
+            best_movie[1] = probability_like_movie
+
+        if probability_dislike_movie > worst_movie[1]:
+            worst_movie[0] = movie["Title"]
+            worst_movie[1] = probability_dislike_movie
+
+    #print("Probability you will like " + movie["Title"] + " is: " + str(probability_like_movie))
+    #print("Probability you will dislike " + movie["Title"] + " is: " + str(probability_dislike_movie))
+
+print(best_movie)
+print(worst_movie)
+
+
+"""print("Probability " + word + " shows up in a liked movie: "
++ str(prob_word_given_like.get(word)) + "\nProbability " + word
++ " shows up in a disliked movie: " + str(prob_word_given_dislike.get(word)) + "\n")"""
 
 # iterate over the movie list, using naive bayes to calculate probabilities
 # we need to make an dict of doubles and movie titles to store our results
-results = []
 """for movie_comp in movies:
     # needed to make the next for loop work?
     
