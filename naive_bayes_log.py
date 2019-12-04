@@ -138,16 +138,17 @@ for movie in movies:
         movie_to_add.append(movie["Title"])
         movie_to_add.append(probability_like_movie)
         movie_to_add.append(probability_dislike_movie)
-        movie_to_add.append(probability_like_movie-probability_dislike_movie)
+        delta_prob = probability_like_movie-probability_dislike_movie
+        movie_to_add.append(delta_prob)
         results.append(movie_to_add)
 
-        if probability_like_movie > best_movie[1]:
+        if delta_prob > best_movie[1]:
             best_movie[0] = movie["Title"]
-            best_movie[1] = probability_like_movie
+            best_movie[1] = delta_prob
 
-        if probability_dislike_movie > worst_movie[1]:
+        if delta_prob > worst_movie[1]:
             worst_movie[0] = movie["Title"]
-            worst_movie[1] = probability_dislike_movie
+            worst_movie[1] = delta_prob
 
     #print("Probability you will like " + movie["Title"] + " is: " + str(probability_like_movie))
     #print("Probability you will dislike " + movie["Title"] + " is: " + str(probability_dislike_movie))
