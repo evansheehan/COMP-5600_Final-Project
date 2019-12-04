@@ -6,7 +6,7 @@ import Scrape
 from typing import List, Any
 
 movies = []
-with open("AllReviews_Reformatted.json") as f:
+with open("AllReviews_Reformatted_2.json") as f:
     data = json.load(f)
     for movie in data:
         movie["Title"] = str.strip(movie["Title"][0])
@@ -14,7 +14,7 @@ with open("AllReviews_Reformatted.json") as f:
 
 # get 3 movies the user liked and disliked
 l_1 = "Frozen" #input("Enter a movie you enjoyed: ")
-l_2 = "Click" #input("Enter another movie you enjoyed: ")
+l_2 = "Toy Story" #input("Enter another movie you enjoyed: ")
 l_3 = "Moana" #input("Enter a third movie you enjoyed: ")
 
 d_1 = "The Lighthouse" #input("Enter a movie you hated: ")
@@ -77,49 +77,46 @@ p_like = 0.0
 p_dislike = 0.0
 
 # add up all the words total in the liked dict and disliked_dict
+vocabulary_sum = 0
+
 like_sum = 0
 for word in liked_dict:
     like_sum += liked_dict[word] 
     #like_sum = word[0] + like_sum
+
 dislike_sum = 0
 for word in disliked_dict:
     dislike_sum += disliked_dict[word]
     #dislike_sum = word[0] + dislike_sum
 
+vocabulary_sum = like_sum + dislike_sum
+
 # calculate word count difference between liked and disliked and present the two as a ratio
-p_like = like_sum/(like_sum + dislike_sum)
-p_dislike = dislike_sum/(like_sum + dislike_sum)
+p_like = like_sum/(vocabulary_sum)
+p_dislike = dislike_sum/(vocabulary_sum)
 
-prob_word_given_like = {}
-prob_word_given_dislike = {}
+"""prob_word_given_like = {}
+prob_word_given_dislike = {}"""
 
-for word in liked_dict:
-    prob = (liked_dict[word]/like_sum)+1
+"""for word in liked_dict:
+    prob = (liked_dict[word] + 1)/(like_sum + vocabulary_sum)
     prob_word_given_like.update({word: prob})
 
 for word in disliked_dict:
-    prob = (disliked_dict[word]/like_sum)+1
-    prob_word_given_dislike.update({word: prob})
+    prob = (disliked_dict[word] + 1)/(dislike_sum + vocabulary_sum)
+    prob_word_given_dislike.update({word: prob})"""
 
-results = []
+best_movie = ["", -1]
+worst_movie = ["", -1]
 
-best_movie = ["", 0]
-worst_movie = ["", 0]
 for movie in movies:
     if movie["Reviews"] != None and movie["Title"] not in input_list:
         like_probabilities = []
         dislike_probabilities = []
         for word in movie["Reviews"]:
-            try:
-                prob_word_like = prob_word_given_like.get(word)
-                prob_word_dislike = prob_word_given_dislike.get(word)
-            except TypeError:
-                continue
+            prob_word_given_like = liked_dict.get(word)/vocabulary_sum
+            prob_word_given_dislike = disliked_dict.get(word)/vocabulary_sum
 
-            if prob_word_like:
-                like_probabilities.append(prob_word_like)
-            if prob_word_dislike:
-                dislike_probabilities.append(prob_word_dislike)
         
         probability_like_movie = p_like*(np.product(like_probabilities))
         probability_dislike_movie = p_dislike*(np.product(dislike_probabilities))
