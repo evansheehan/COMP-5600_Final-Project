@@ -60,7 +60,7 @@ for i in range(current_index, 1000):
             "Reviews": reviewDict
         }"""
 
-        movie = Scrape.generate_movie(movie_title[0])
+        movie = scrape.generate_movie(movie_title[0])
         movies.append(movie)
         
     except:

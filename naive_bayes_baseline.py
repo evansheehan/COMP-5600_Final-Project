@@ -137,7 +137,7 @@ for movie in movies:
         movie_to_add.append(movie["Title"])
         movie_to_add.append(probability_like_movie)
         movie_to_add.append(probability_dislike_movie)
-        movie_to_add.append(abs(probability_like_movie-probability_dislike_movie))
+        movie_to_add.append(probability_like_movie-probability_dislike_movie)
         results.append(movie_to_add)
 
         if probability_like_movie > best_movie[1]:
