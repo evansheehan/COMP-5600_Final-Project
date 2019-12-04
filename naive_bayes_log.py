@@ -13,13 +13,13 @@ with open("AllReviews_Reformatted_2.json") as f:
         movies.append(movie)
 
 # get 3 movies the user liked and disliked
-l_1 = "Frozen" #input("Enter a movie you enjoyed: ")
-l_2 = "Toy Story" #input("Enter another movie you enjoyed: ")
-l_3 = "Moana" #input("Enter a third movie you enjoyed: ")
+l_1 = "Whiplash" #input("Enter a movie you enjoyed: ")
+l_2 = "First Man" #input("Enter another movie you enjoyed: ")
+l_3 = "I Saw the Devil" #input("Enter a third movie you enjoyed: ")
 
 d_1 = "The Lighthouse" #input("Enter a movie you hated: ")
 d_2 = "Parasite" #input("Enter another movie you hated: ")
-d_3 = "Whiplash" #input("Enter a third movie you hated: ")
+d_3 = "Moana" #input("Enter a third movie you hated: ")
 
 input_list = [l_1, l_2, l_3, d_1, d_2, d_3]
 
@@ -159,7 +159,6 @@ print(worst_movie)
 def sort_value(val):
     return val[3]
 results.sort(key = sort_value, reverse = True)
-
 
 """import json
 import math
