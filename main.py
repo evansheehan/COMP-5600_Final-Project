@@ -7,7 +7,7 @@ accuracy_results = []
 accuracy_results_mean = []
 
 for i in range(50):
-    generator.reset_data()
+    liked_training_ratio, disliked_training_ratio = generator.reset_data()
     accuracy_results.append(nb_log.run_nb_log())
     accuracy_results_mean.append(np.mean(accuracy_results))
 

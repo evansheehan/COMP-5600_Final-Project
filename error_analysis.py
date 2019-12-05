@@ -1,5 +1,4 @@
 def generate_error_rate(liked_test_set, disliked_test_set, results):
-
     total_correct = 0
     for movie in results:
         movie_title = movie[0]
