@@ -46,3 +46,5 @@ with open(file_name + ".json", "r") as f:
 
 with open(file_name + "_pruned.json", "w") as f:
     json.dump(pruned_data, f)
+
+print("test")
