@@ -3,8 +3,8 @@ import numpy as np
 
 def reset_data():
 
-    LIKED_TRAINING_SET_SIZE = 200
-    DISLIKED_TRAINING_SET_SIZE = 100
+    LIKED_TRAINING_SET_SIZE = 150
+    DISLIKED_TRAINING_SET_SIZE = 75
 
     liked_all = []
     disliked_all = []
@@ -15,7 +15,7 @@ def reset_data():
     liked_test_set = []
     disliked_test_set = []
 
-    with open("Dylans_Movie_Data.json", "r") as f:
+    with open("Dylans_Movie_Data_pruned.json", "r") as f:
         data = json.load(f)
         for movie in data:
             if movie[1] == "1":
@@ -46,3 +46,4 @@ def reset_data():
     with open("disliked_test_set.json", "w") as f:
         json.dump(disliked_test_set, f)
 
+    return LIKED_TRAINING_SET_SIZE/len(liked_all), DISLIKED_TRAINING_SET_SIZE/len(disliked_all)
