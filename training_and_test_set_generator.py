@@ -1,10 +1,10 @@
 import json
 import numpy as np
 
-def reset_data():
+def reset_data(liked_set_ratio_in, disliked_set_ratio_in):
 
-    LIKED_TRAINING_SET_SIZE = 150
-    DISLIKED_TRAINING_SET_SIZE = 75
+    liked_training_set_size = liked_set_ratio_in
+    disliked_training_set_size = disliked_set_ratio_in
 
     liked_all = []
     disliked_all = []
@@ -23,8 +23,13 @@ def reset_data():
             elif movie[1] == "2":
                 disliked_all.append(movie[0])
 
-    liked_training_set = np.random.choice(liked_all, LIKED_TRAINING_SET_SIZE, False)
-    disliked_training_set = np.random.choice(disliked_all, DISLIKED_TRAINING_SET_SIZE, False)
+    liked_training_set_size *= len(liked_all)
+    liked_training_set_size = int(liked_training_set_size)
+    disliked_training_set_size *= len(disliked_all)
+    disliked_training_set_size = int(disliked_training_set_size)
+
+    liked_training_set = np.random.choice(liked_all, liked_training_set_size, False)
+    disliked_training_set = np.random.choice(disliked_all, disliked_training_set_size, False)
 
     for movie in liked_all:
         if movie not in liked_training_set:
@@ -46,4 +51,4 @@ def reset_data():
     with open("disliked_test_set.json", "w") as f:
         json.dump(disliked_test_set, f)
 
-    return LIKED_TRAINING_SET_SIZE/len(liked_all), DISLIKED_TRAINING_SET_SIZE/len(disliked_all)
+    return liked_training_set_size/len(liked_all), disliked_training_set_size/len(disliked_all)
