@@ -37,13 +37,6 @@ for movie in movies:
 assert len(liked_movies) == 3
 assert len(disliked_movies) == 3
 
-"""liked_1 = next(movie for movie in movies if movie["Title"][0] == l_1)
-liked_2 = next(movie for movie in movies if movie["Title"][0] == l_2)
-liked_3 = next(movie for movie in movies if movie["Title"][0] == l_3)
-disliked_1 = next(movie for movie in movies if movie["Title"][0] == d_1)
-disliked_2 = next(movie for movie in movies if movie["Title"][0] == d_2)
-disliked_3 = next(movie for movie in movies if movie["Title"][0] == d_3)"""
-
 # populate two new dictionaries of liked and disliked reviews
 liked_dict = {}
 disliked_dict = {}
@@ -94,17 +87,6 @@ vocabulary_sum = like_sum + dislike_sum
 p_like = like_sum/(vocabulary_sum)
 p_dislike = dislike_sum/(vocabulary_sum)
 
-"""prob_word_given_like = {}
-prob_word_given_dislike = {}"""
-
-"""for word in liked_dict:
-    prob = (liked_dict[word] + 1)/(like_sum + vocabulary_sum)
-    prob_word_given_like.update({word: prob})
-
-for word in disliked_dict:
-    prob = (disliked_dict[word] + 1)/(dislike_sum + vocabulary_sum)
-    prob_word_given_dislike.update({word: prob})"""
-
 best_movie = ["", -1]
 worst_movie = ["", -1]
 
@@ -154,55 +136,3 @@ for movie in movies:
 print(best_movie)
 print(worst_movie)
 
-
-"""print("Probability " + word + " shows up in a liked movie: "
-+ str(prob_word_given_like.get(word)) + "\nProbability " + word
-+ " shows up in a disliked movie: " + str(prob_word_given_dislike.get(word)) + "\n")"""
-
-# iterate over the movie list, using naive bayes to calculate probabilities
-# we need to make an dict of doubles and movie titles to store our results
-"""for movie_comp in movies:
-    # needed to make the next for loop work?
-    
-    #assert isinstance(movie_comp, movie)
-
-    # for our results array
-    result_str = movie_comp["Title"]
-    prob_disliked = p_dislike
-    prob_liked = p_like
-    dict_comp = movie_comp["Reviews"]
-    numerator = 0
-    denominator = like_sum
-    
-    for word_comp in dict_comp:
-
-        for dictionary in liked_dict:
-            for word in dictionary:
-                #if word_compare 
-                if word_comp[1] == word[1]:
-                    numerator += min(word_comp[0], word[0])
-                    break
-    
-    prob_liked = prob_liked * (numerator/denominator) * 
-
-
-        # no clue if this is how you do it but I want to find the word in liked_dict that is equal to word_comp
-        word_1 = next(object for word in liked_dict if word_comp == liked_dict[1])
-        # we take this word and set its count as the numerator
-        numerator = word_1[0]
-        # number of distinct words in liked_dict is denominator
-        denominator = liked_dict.sizeof()
-        # divide then multiply by the number of times this word appears
-        prob_liked = prob_liked * (numerator/denominator) * word_comp[0]
-        # now we repeat for disliked
-        # no clue if this is how you do it but I want to find the word in liked_dict that is equal to word_comp
-        word_2 = next(object for word in disliked_dict if word_comp == disliked_dict[1])
-        # we take this word and set its count as the numerator
-        numerator = word_1[0]
-        # number of distinct words in liked_dict is denominator
-        denominator = disliked_dict.sizeof()
-        # divide then multiply by the number of times this word appears
-        prob_disliked = prob_disliked * (numerator / denominator) * word_comp[0]
-    # append this movie and it's probabilities to our results
-    results.append({"Title": result_str, "Like": prob_liked, "Dislike": prob_disliked})
-print(results)"""

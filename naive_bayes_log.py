@@ -48,7 +48,6 @@ disliked_3 = next(movie for movie in movies if movie["Title"][0] == d_3)"""
 # populate two new dictionaries of liked and disliked reviews
 liked_dict = {}
 disliked_dict = {}
-#distinct_words = {}
 
 for movie in liked_movies:
     assert movie["Reviews"] != None, movie["Title"] + " has no reviews."
