@@ -12,16 +12,26 @@ with open("AllReviews_Reformatted_2.json") as f:
         movie["Title"] = str.strip(movie["Title"][0])
         movies.append(movie)
 
-# get 3 movies the user liked and disliked
-l_1 = "Whiplash" #input("Enter a movie you enjoyed: ")
-l_2 = "First Man" #input("Enter another movie you enjoyed: ")
-l_3 = "I Saw the Devil" #input("Enter a third movie you enjoyed: ")
+# # get 3 movies the user liked and disliked
+# l_1 = "Whiplash" #input("Enter a movie you enjoyed: ")
+# l_2 = "First Man" #input("Enter another movie you enjoyed: ")
+# l_3 = "I Saw the Devil" #input("Enter a third movie you enjoyed: ")
 
-d_1 = "Frozen" #input("Enter a movie you hated: ")
-d_2 = "Parasite" #input("Enter another movie you hated: ")
-d_3 = "Moana" #input("Enter a third movie you hated: ")
+# d_1 = "Frozen" #input("Enter a movie you hated: ")
+# d_2 = "Parasite" #input("Enter another movie you hated: ")
+# d_3 = "Moana" #input("Enter a third movie you hated: ")
 
-input_list = [l_1, l_2, l_3, d_1, d_2, d_3]
+liked_list = []
+
+with open("liked_training_set.json") as f:
+    data = json.load(f)
+    liked_list = data
+  
+disliked_list = []
+
+with open("disliked_training_set.json") as f:
+    data = json.load(f)
+    disliked_list = data
 
 # get all 6 movie objects (may need to correct for case and have a fail case)
 liked_movies = []
@@ -29,14 +39,13 @@ disliked_movies = []
 
 for movie in movies:
     movie_title = str.strip(movie["Title"])
-    if movie_title in input_list:
-        if input_list.index(movie_title) < 3:
-            liked_movies.append(movie)
-        else:
-            disliked_movies.append(movie)
+    if movie_title in liked_list:
+        liked_movies.append(movie)
+    if movie_title in disliked_list:    
+        disliked_movies.append(movie)
 
-assert len(liked_movies) == 3
-assert len(disliked_movies) == 3
+assert len(liked_movies) > 0
+assert len(disliked_movies) > 0
 
 """liked_1 = next(movie for movie in movies if movie["Title"][0] == l_1)
 liked_2 = next(movie for movie in movies if movie["Title"][0] == l_2)
