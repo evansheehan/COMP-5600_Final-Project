@@ -13,11 +13,11 @@ with open("AllReviews_Reformatted_2.json") as f:
         movies.append(movie)
 
 # get 3 movies the user liked and disliked
-l_1 = "Toy Story" #input("Enter a movie you enjoyed: ")
-l_2 = "Cars" #input("Enter another movie you enjoyed: ")
-l_3 = "Coco" #input("Enter a third movie you enjoyed: ")
+l_1 = "Whiplash" #input("Enter a movie you enjoyed: ")
+l_2 = "First Man" #input("Enter another movie you enjoyed: ")
+l_3 = "I Saw the Devil" #input("Enter a third movie you enjoyed: ")
 
-d_1 = "Frozen" #input("Enter a movie you hated: ")
+d_1 = "The Lighthouse" #input("Enter a movie you hated: ")
 d_2 = "Parasite" #input("Enter another movie you hated: ")
 d_3 = "Moana" #input("Enter a third movie you hated: ")
 
@@ -106,8 +106,8 @@ for word in disliked_dict:
     prob = (disliked_dict[word] + 1)/(dislike_sum + vocabulary_sum)
     prob_word_given_dislike.update({word: prob})"""
 
-best_movie = ["", -1]
-worst_movie = ["", 1]
+best_movie = ["", 1]
+worst_movie = ["", -1]
 
 results = []
 
@@ -130,8 +130,8 @@ for movie in movies:
             dislike_probabilities.append(prob_word_given_dislike)
 
         
-        probability_like_movie = math.log1p(p_like)+(np.sum(like_probabilities))
-        probability_dislike_movie = math.log1p(p_dislike)+(np.sum(dislike_probabilities))
+        probability_dislike_movie = math.log1p(p_dislike)-(np.sum(like_probabilities))
+        probability_like_movie = math.log1p(p_like)-(np.sum(dislike_probabilities))
 
         #Add to results array
         movie_to_add = []
@@ -140,16 +140,16 @@ for movie in movies:
         movie_to_add.append(probability_dislike_movie)
         delta_prob = probability_like_movie-probability_dislike_movie
         sum_prob = probability_like_movie+probability_dislike_movie
-        movie_to_add.append(delta_prob/sum_prob)
+        movie_to_add.append(delta_prob)
         results.append(movie_to_add)
 
-        if (delta_prob) > best_movie[1]:
+        if (delta_prob) < best_movie[1]:
             best_movie[0] = movie["Title"]
-            best_movie[1] = delta_prob/sum_prob
+            best_movie[1] = delta_prob
 
-        if (delta_prob) < worst_movie[1]:
+        if (delta_prob) > worst_movie[1]:
             worst_movie[0] = movie["Title"]
-            worst_movie[1] = delta_prob/sum_prob
+            worst_movie[1] = delta_prob
 
     #print("Probability you will like " + movie["Title"] + " is: " + str(probability_like_movie))
     #print("Probability you will dislike " + movie["Title"] + " is: " + str(probability_dislike_movie))
@@ -159,8 +159,6 @@ print(worst_movie)
 def sort_value(val):
     return val[3]
 results.sort(key = sort_value, reverse = True)
-with open("results_output.json", "w") as f:
-    json.dump(results, f)
 
 """import json
 import math

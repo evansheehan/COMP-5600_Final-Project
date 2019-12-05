@@ -1,4 +1,4 @@
-from WordCount import WordCount as wc
+from word_count import WordCount as wc
 import string
 import json
 

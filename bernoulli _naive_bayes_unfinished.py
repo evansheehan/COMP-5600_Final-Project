@@ -13,9 +13,9 @@ with open("AllReviews_Reformatted_2.json") as f:
         movies.append(movie)
 
 # get 3 movies the user liked and disliked
-l_1 = "Toy Story" #input("Enter a movie you enjoyed: ")
-l_2 = "Cars" #input("Enter another movie you enjoyed: ")
-l_3 = "Coco" #input("Enter a third movie you enjoyed: ")
+l_1 = "Whiplash" #input("Enter a movie you enjoyed: ")
+l_2 = "First Man" #input("Enter another movie you enjoyed: ")
+l_3 = "I Saw the Devil" #input("Enter a third movie you enjoyed: ")
 
 d_1 = "Frozen" #input("Enter a movie you hated: ")
 d_2 = "Parasite" #input("Enter another movie you hated: ")
@@ -46,31 +46,39 @@ disliked_2 = next(movie for movie in movies if movie["Title"][0] == d_2)
 disliked_3 = next(movie for movie in movies if movie["Title"][0] == d_3)"""
 
 # populate two new dictionaries of liked and disliked reviews
-liked_dict = {}
-disliked_dict = {}
+vocab = []
+like_count = 3
+dislike_count = 3
+all_movies = liked_movies.append(disliked_movies)
 #distinct_words = {}
 
-for movie in liked_movies:
+for movie in all_movies:
     assert movie["Reviews"] != None, movie["Title"] + " has no reviews."
     reviews = list(movie["Reviews"].items())
     for review in reviews:
         word = review[0]
-        count = review[1]
-        if word in liked_dict:
-            liked_dict[word] = liked_dict.get(word) + count
-        else:
-            liked_dict.update({word: count})
-
-for movie in disliked_movies:
-    assert movie["Reviews"] != None, movie["Title"] + " has no reviews."
-    reviews = list(movie["Reviews"].items())
-    for review in reviews:
-        word = review[0]
-        count = review[1]
-        if word in disliked_dict:
-            disliked_dict[word] = disliked_dict.get(word) + count
-        else:
-            disliked_dict.update({word: count})
+        entries = []
+        entries[0] = word
+        if word in vocab:
+            if movie in liked_movies:
+                entries[1] += 1
+            if word in disliked_movies:
+                entries[2] += 1
+        else: 
+            
+            
+#
+#for movie in disliked_movies:
+#    assert movie["Reviews"] != None, movie["Title"] + " has no reviews."
+#    reviews = list(movie["Reviews"].items())
+#    dislike_count += 1
+#    for review in reviews:
+#        word = review[0]
+#        count = review[1]
+#        if word in disliked_dict:
+#            disliked_dict[word] = disliked_dict.get(word) + count
+#        else:
+#            disliked_dict.update({word: count})
 
 # instantiate comparison variables
 p_like = 0.0
@@ -79,21 +87,21 @@ p_dislike = 0.0
 # add up all the words total in the liked dict and disliked_dict
 vocabulary_sum = 0
 
-like_sum = 0
-for word in liked_dict:
-    like_sum += liked_dict[word] 
-    #like_sum = word[0] + like_sum
+#like_sum = 0
+#for word in liked_dict:
+#    like_sum += liked_dict[word] 
+#    #like_sum = word[0] + like_sum
+#
+#dislike_sum = 0
+#for word in disliked_dict:
+#    dislike_sum += disliked_dict[word]
+#    #dislike_sum = word[0] + dislike_sum
 
-dislike_sum = 0
-for word in disliked_dict:
-    dislike_sum += disliked_dict[word]
-    #dislike_sum = word[0] + dislike_sum
-
-vocabulary_sum = like_sum + dislike_sum
+vocabulary_sum = like_count + dislike_count
 
 # calculate word count difference between liked and disliked and present the two as a ratio
-p_like = math.log1p(like_sum/(vocabulary_sum))
-p_dislike = math.log1p(dislike_sum/(vocabulary_sum))
+p_like = math.log1p(like_count/(vocabulary_sum))
+p_dislike = math.log1p(dislike_count/(vocabulary_sum))
 
 """prob_word_given_like = {}
 prob_word_given_dislike = {}"""
@@ -140,16 +148,16 @@ for movie in movies:
         movie_to_add.append(probability_dislike_movie)
         delta_prob = probability_like_movie-probability_dislike_movie
         sum_prob = probability_like_movie+probability_dislike_movie
-        movie_to_add.append(delta_prob/sum_prob)
+        movie_to_add.append(delta_prob)
         results.append(movie_to_add)
 
         if (delta_prob) > best_movie[1]:
             best_movie[0] = movie["Title"]
-            best_movie[1] = delta_prob/sum_prob
+            best_movie[1] = delta_prob
 
         if (delta_prob) < worst_movie[1]:
             worst_movie[0] = movie["Title"]
-            worst_movie[1] = delta_prob/sum_prob
+            worst_movie[1] = delta_prob
 
     #print("Probability you will like " + movie["Title"] + " is: " + str(probability_like_movie))
     #print("Probability you will dislike " + movie["Title"] + " is: " + str(probability_dislike_movie))
@@ -159,8 +167,6 @@ print(worst_movie)
 def sort_value(val):
     return val[3]
 results.sort(key = sort_value, reverse = True)
-with open("results_output.json", "w") as f:
-    json.dump(results, f)
 
 """import json
 import math
