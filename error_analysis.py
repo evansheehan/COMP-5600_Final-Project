@@ -19,8 +19,8 @@ def generate_error_rate(liked_test_set, disliked_test_set, results):
 
         # movie[4]("Not Correct!")
 
-    guessed_dislike_correctly_ratio = guessed_dislike_correctly/len(results)
-    guessed_like_correctly_ratio = guessed_like_correctly/len(results)
+    guessed_like_correctly_ratio = guessed_like_correctly/len(liked_test_set)
+    guessed_dislike_correctly_ratio = guessed_dislike_correctly/len(disliked_test_set)
     accuracy = total_correct/(len(liked_test_set) + len(disliked_test_set))
     print("Accuracy: " + str(accuracy))
     return  results, accuracy
