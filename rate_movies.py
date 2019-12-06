@@ -2,7 +2,7 @@ import json
 import random
 
 movies = []
-with open("AllReviews_Reformatted_2.json") as f:
+with open("AllReviews_Reformatted_2_pruned.json") as f:
     data = json.load(f)
     for movie in data:
         movie["Title"] = str.strip(movie["Title"][0])
