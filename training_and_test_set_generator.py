@@ -15,7 +15,10 @@ def reset_data(liked_set_ratio_in, disliked_set_ratio_in):
     liked_test_set = []
     disliked_test_set = []
 
-    with open("Dylans_Movie_Data_pruned.json", "r") as f:
+    # file_name = "Dylans_Movie_Data_pruned.json"
+    file_name = "Rand_Movie_Likes_and_Dislikes.json"
+
+    with open(file_name, "r") as f:
         data = json.load(f)
         for movie in data:
             if movie[1] == "1":
@@ -23,6 +26,7 @@ def reset_data(liked_set_ratio_in, disliked_set_ratio_in):
             elif movie[1] == "2":
                 disliked_all.append(movie[0])
 
+    print(file_name + " being used to generate training and test set.")
     liked_training_set_size *= len(liked_all)
     liked_training_set_size = int(liked_training_set_size)
     disliked_training_set_size *= len(disliked_all)

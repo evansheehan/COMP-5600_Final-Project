@@ -12,8 +12,8 @@ def prune_outliers(movies):
     std_dev = np.std(unique_words)
     mean = np.mean(unique_words)
 
-    minimum = mean - std_dev
-    maximum = mean + 2*std_dev
+    minimum = 0#mean - std_dev
+    maximum = 9999#mean + std_dev
 
     unpruned_data = []
     file_name = "Dylans_Movie_Data"
