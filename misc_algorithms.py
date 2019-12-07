@@ -37,12 +37,52 @@ def eliminate_empty_reviews(movie_list):
 
     return new_movie_list
 
-movie_list = []
+def generate_dicts(liked_movies, disliked_movies, liked_and_disliked_movies):
+    liked_dict = {}
+    disliked_dict = {}
+    cumulative_dict = {}
 
-with open("AllReviews_Reformatted.json", "r") as f:
-    movie_list = json.load(f)
-    movie_list = eliminate_empty_reviews(movie_list)
-    print("debug")
+    for movie in liked_movies:
+        assert movie["Reviews"] != None, movie["Title"] + " has no reviews."
+        reviews = list(movie["Reviews"].items())
+        for review in reviews:
+            word = review[0]
+            count = review[1]
+            if word in liked_dict:
+                liked_dict[word] = liked_dict.get(word) + count
+            else:
+                liked_dict.update({word: count})
 
-with open("AllReviews_Reformatted_2.json", "w") as f:
-    json.dump(movie_list, f)
+    for movie in disliked_movies:
+        assert movie["Reviews"] != None, movie["Title"] + " has no reviews."
+        reviews = list(movie["Reviews"].items())
+        for review in reviews:
+            word = review[0]
+            count = review[1]
+            if word in disliked_dict:
+                disliked_dict[word] = disliked_dict.get(word) + count
+            else:
+                disliked_dict.update({word: count})
+
+    for movie in liked_and_disliked_movies:
+        assert movie["Reviews"] != None, movie["Title"] + " has no reviews."
+        reviews = list(movie["Reviews"].items())
+        for review in reviews:
+            word = review[0]
+            count = review[1]
+            if word in cumulative_dict:
+                cumulative_dict[word] = cumulative_dict.get(word) + count
+            else:
+                cumulative_dict.update({word: count})
+
+    return liked_dict, disliked_dict, cumulative_dict
+
+# movie_list = []
+
+# with open("AllReviews_Reformatted.json", "r") as f:
+#     movie_list = json.load(f)
+#     movie_list = eliminate_empty_reviews(movie_list)
+#     print("debug")
+
+# with open("AllReviews_Reformatted_2.json", "w") as f:
+#     json.dump(movie_list, f)
