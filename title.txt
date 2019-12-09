@@ -1,1 +1,1 @@
-Movie Recommendation Engine Using Naive Bayes Text Classification
+Creating a Movie Recommendation Engine using Naïve Bayes for Text Classification

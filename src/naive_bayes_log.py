@@ -5,9 +5,6 @@ import error_analysis
 import misc_algorithms
 import binormal_separation as bns
 
-# import the list of movies
-from typing import List, Any
-
 #Takes a single boolean as a parameter determining whether you want to run test/training data or manually input data
 def run_nb_log(testing):
 
@@ -46,7 +43,7 @@ def run_nb_log(testing):
         liked_list.append("Toy Story")
         liked_list.append("Toy Story 2")
         disliked_list.append("Get Out")
-        disliked_list.append("As Above So Below")
+        disliked_list.append("The Descent")
 
     # get all 6 movie objects (may need to correct for case and have a fail case)
     liked_movies = []
@@ -130,11 +127,11 @@ def run_nb_log(testing):
             for word in movie["Reviews"]:
 
                 try:
-                    prob_word_given_like = math.log1p(((liked_dict.get(word) + 1)/(like_sum))) #+ len(cumulative_dict))))#*movie["Reviews"].get(word))
+                    prob_word_given_like = math.log1p(((liked_dict.get(word) + 1)/(like_sum)))# + len(cumulative_dict)))))#*movie["Reviews"].get(word))
                 except:
                     prob_word_given_like = math.log1p(1 / (like_sum)) #+ len(cumulative_dict)))
                 try:
-                    prob_word_given_dislike = math.log1p(((disliked_dict.get(word) + 1)/(dislike_sum))) #+ len(cumulative_dict))))#*movie["Reviews"].get(word)
+                    prob_word_given_dislike = math.log1p(((disliked_dict.get(word) + 1)/(dislike_sum)))# + len(cumulative_dict)))))#*movie["Reviews"].get(word)
                 except:
                     prob_word_given_dislike = math.log1p(1 / (dislike_sum)) #+ len(cumulative_dict)))
 

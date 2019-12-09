@@ -1,5 +1,5 @@
 {
-    "python.pythonPath": "/Users/awubis/opt/anaconda3/bin/python",
+    "python.pythonPath": "C:\\Users\\awubi\\AppData\\Local\\Programs\\Python\\Python37\\python.exe",
     "files.exclude": {
         "**/.classpath": true,
         "**/.project": true,

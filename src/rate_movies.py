@@ -2,8 +2,8 @@ import json
 import random
 
 #Probabilities when generating a random output
-prob_rate_like = 0.2
-prob_rate_dislike = 0.8
+prob_rate_like = 0.5
+prob_rate_dislike = 0.5
 assert (prob_rate_like + prob_rate_dislike) == 1
 
 movies = []

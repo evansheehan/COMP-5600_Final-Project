@@ -8,7 +8,6 @@ def reset_data(liked_set_ratio_in, disliked_set_ratio_in):
 
     liked_all = []
     disliked_all = []
-    unseen = []
 
     liked_training_set = []
     disliked_training_set = []
@@ -16,8 +15,8 @@ def reset_data(liked_set_ratio_in, disliked_set_ratio_in):
     disliked_test_set = []
 
     directory = "output/rated_movies/"
-    file_name = "Dylans_Movie_Data_pruned.json"
-    # file_name = "Rand_Movie_Likes_and_Dislikes.json"
+    # file_name = "Dylans_Movie_Data_pruned.json"
+    file_name = "Rand_Movie_Likes_and_Dislikes.json"
 
     with open(directory + file_name, "r") as f:
         data = json.load(f)

@@ -1,4 +1,10 @@
-Naive
-Bayes 
+naive
+bayes
 movie
 recommendation
+text
+classification
+selenium
+beautifulsoup
+letterboxd
+imdb

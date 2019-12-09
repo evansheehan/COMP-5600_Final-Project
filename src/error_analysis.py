@@ -26,8 +26,8 @@ def generate_error_rate(liked_test_set, disliked_test_set, results):
                 total_correct += 1
             guessed_dislike += 1
 
-    # guessed_like_correctly_ratio = guessed_like_correctly/len(liked_test_set)
-    # guessed_dislike_correctly_ratio = guessed_dislike_correctly/len(disliked_test_set)
+    guessed_like_correctly_ratio = guessed_like_correctly/len(liked_test_set)
+    guessed_dislike_correctly_ratio = guessed_dislike_correctly/len(disliked_test_set)
 
     #Smoothing so we don't divide by 0
     if guessed_like < 1: guessed_like += 1
