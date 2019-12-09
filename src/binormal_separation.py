@@ -31,8 +31,8 @@ def bns(term, liked_movies, disliked_movies):
     bns_result = abs(norm.ppf(tpr) - norm.ppf(fpr))
 
     #Max and min for algorithm
-    if bns_result < 0.0005 or math.isinf(bns_result) or math.isnan(bns_result): bns_result = 0.0005
-    elif bns_result > 1: bns_result = 1
+    if bns_result < 0.0005 or math.isnan(bns_result): bns_result = 0.0005
+    elif bns_result > 1 or math.isinf(bns_result): bns_result = 1
 
     return bns_result
 
